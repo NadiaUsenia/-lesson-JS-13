@@ -222,7 +222,7 @@ class ContactsApp extends Contacts {
   
  const getData = async () => {
 
-     const response = await fetch('https://jsonplaceholder.typicode.com/users/1');  
+     const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
      const result = await response.json();
      console.log(result);
      this.usersList = result;
@@ -256,9 +256,17 @@ const contactsAddUpdate = function() {
 let localcontactsAddData = localStorage.getItem('contactsAddData');
 if (localcontactsAddData.length > 0) contactsAddData = JSON.parse(localcontactsAddData);
 
-let contactsAddList = document.querySelector('.contacts_list ul');
-contactsAddList.innerHTML = '';
-contactsAddData.forEch(function(contactsAdd, id) {
+let contactsAddList = document.body.querySelector('.contacts_list'); //не находится
+if(contactsAddList) {
+  contactsAddList.innerHTML = '';
+} else {
+  contactsAddList = document.createElement('ul');
+
+  contactsAddList.classList.add('.contacts_list');
+  document.body.appendChild(contactsAddList);
+}
+
+contactsAddData.forEach(function(contactsAdd, id) {
   let elemContact = document.createElement('li');
   elemContact.innerHTML = `
   <div class="id">${id + 1}</div>
